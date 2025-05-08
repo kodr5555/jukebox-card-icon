@@ -1,13 +1,10 @@
 # Jukebox Card Icon for Home-Assistant
 
-This is a media player UI for Home-Assistant leveraging the potential of the excellent new
-[Lovelace UI.](https://www.home-assistant.io/lovelace/)
+This is the media player user interface for Home-Assistant!
+This is an upgrade of https://github.com/cyberjunky/jukebox-card.git which has an updated look and added radio station icons!
+It allows you to set up a set of web radio stations (or perhaps other radio media identifiers like Spotify) and play them on the media player objects of your choice, such as Chromecast or Spotify Connect listeners.
 
-It allows you to configure a set of web radio stations (or possibly other radio media IDs such as spotify), and
-play them to media player entities of your choice, like chromecast or spotify connect listeners.
-
-You can send different media to different players, which makes it usable for multi-room setups: Let your kids listen
-to some *Frozen*, while you're Jazzing in the Kitchen. Volume-Level is handled separately, too.
+You can send different media to different players, making it suitable for multi-room setups: let your kids listen to Frozen while you play Jazzing in the kitchen. Volume is also handled separately.
 
 ## Screenshot
 ![Screenshot](screenshot.png)
