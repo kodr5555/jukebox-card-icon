@@ -21,26 +21,38 @@ class JukeboxCardIcon extends HTMLElement {
         return this._hass;
     }
 
-    buildSpeakerSwitches(hass) {
-        this._tabs = document.createElement('ha-tabs');
-        this._tabs.setAttribute('scrollable', true);
-        this._tabs.addEventListener('iron-activate', (e) => this.onSpeakerSelect(e.detail.item.entityId));
+buildSpeakerSwitches(hass) {
+    this._tabs = document.createElement('ha-tabs');
+    this._tabs.setAttribute('scrollable', 'true');
+    this._tabs.style.margin = '8px';
 
-        this.config.entities.forEach(entityId => {
-            if (!hass.states[entityId]) {
-                console.log('Jukebox: No State for entity', entityId);
-                return;
-            }
-            this._tabs.appendChild(this.buildSpeakerSwitch(entityId, hass));
-        });
+    this.config.entities.forEach((entityId, index) => {
+        const stateObj = hass.states[entityId];
+        if (!stateObj) {
+            console.warn('Jukebox: No state for entity', entityId);
+            return;
+        }
 
-        // automatically activate the first speaker that's playing
-        const firstPlayingSpeakerIndex = this.findFirstPlayingIndex(hass);
-        this._selectedSpeaker = this.config.entities[firstPlayingSpeakerIndex];
-        this._tabs.setAttribute('selected', firstPlayingSpeakerIndex);
+        const tab = document.createElement('ha-tab');
+        tab.setAttribute('label', stateObj.attributes.friendly_name || entityId);
+        tab.dataset.entityId = entityId;
+        this._tabs.appendChild(tab);
+    });
 
-        return this._tabs;
-    }
+    this._tabs.addEventListener('tab-changed', (e) => {
+        const selectedIndex = e.detail.index;
+        const selectedTab = this._tabs.querySelectorAll('ha-tab')[selectedIndex];
+        const entityId = selectedTab.dataset.entityId;
+        this.onSpeakerSelect(entityId);
+    });
+
+    // выбрать первый "играющий" или нулевой
+    const firstPlayingIndex = this.findFirstPlayingIndex(hass);
+    this._selectedSpeaker = this.config.entities[firstPlayingIndex];
+    this._tabs.selected = firstPlayingIndex;
+
+    return this._tabs;
+}
 
     buildStationList() {
         this._stationButtons = [];
