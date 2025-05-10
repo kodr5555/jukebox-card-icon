@@ -22,7 +22,7 @@ class JukeboxCardIcon extends HTMLElement {
     }
 
     buildSpeakerSwitches(hass) {
-        this._tabs = document.createElement('paper-tabs');
+        this._tabs = document.createElement('ha-tabs');
         this._tabs.setAttribute('scrollable', true);
         this._tabs.addEventListener('iron-activate', (e) => this.onSpeakerSelect(e.detail.item.entityId));
 
@@ -232,7 +232,7 @@ class JukeboxCardIcon extends HTMLElement {
     buildSpeakerSwitch(entityId, hass) {
         const entity = hass.states[entityId];
 
-        const btn = document.createElement('paper-tab');
+        const btn = document.createElement('ha-tab');
         btn.entityId = entityId;
         btn.innerText = hass.states[entityId].attributes.friendly_name;
         return btn;
@@ -355,10 +355,10 @@ function getStyle() {
         padding: 10px 20px;
     }
 
-    paper-tabs {
+    ha-tabs {
         background-color: #252525;
         color: var(--text-primary-color, #FFFFFF);
-        --paper-tabs-selection-bar-color: #FFFFFF;
+        --ha-tabs-selection-bar-color: #FFFFFF;
         border-top-left-radius: 12px !important;
         border-top-right-radius: 12px !important;
 
